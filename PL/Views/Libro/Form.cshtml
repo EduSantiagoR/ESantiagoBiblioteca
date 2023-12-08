@@ -1,0 +1,41 @@
+﻿@model ML.Libro
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">Formulario</h1>
+<hr />
+<div>
+    @using(Html.BeginForm("Form","Libro",FormMethod.Post,new { enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(model => model.IdLibro)
+        <div class="row mb-3">
+            <div class="col col-4">
+                <label>Título</label>
+                @Html.TextBoxFor(model => model.Titulo, new {@class="form-control",@placeholder="Título"})
+            </div>
+            <div class="col col-4">
+                <label>Disponible</label><br/>
+                <div>
+                    @Html.RadioButtonFor(model=>model.Disponible, true, new {@class="form-check-input"}) Si
+                    @Html.RadioButtonFor(model=>model.Disponible, false, new {@class="form-check-input"}) No
+                </div>
+            </div>
+            <div class="col col-4">
+                <label>Autor</label>
+                @Html.DropDownListFor(model => model.Autor.IdAutor, new SelectList (Model.Autor.Autores, "IdAutor", "Nombre"), "Selecciona un autor", new {@class="form-control"})
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col col-4">
+                <label>Género</label>
+                @Html.DropDownListFor(model=>model.Genero.IdGenero, new SelectList (Model.Genero.Generos, "IdGenero","Tipo"), "Selecciona un género", new {@class="form-control"})
+            </div>
+        </div>
+        <div>
+            <a class="btn btn-danger" href="@Url.Action("GetAll","Libro")">Volver</a>
+            <button type="submit" class="btn btn-success">Guardar</button>
+        </div>
+    }
+</div>

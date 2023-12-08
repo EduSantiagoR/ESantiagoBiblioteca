@@ -1,0 +1,60 @@
+﻿@model ML.Libro
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">Libros</h1>
+<hr />
+<div>
+    <a class="btn btn-success" href="@Url.Action("Form","Libro")">Agregar</a>
+</div>
+<hr />
+<div>
+    @if(Model.Libros != null)
+    {
+        if(Model.Libros.Count > 0)
+        {
+            <table class="table table-dark table-hover text-center">
+                <thead>
+                    <tr>
+                        <th>Editar</th>
+                        <th>Titulo</th>
+                        <th>Autor</th>
+                        <th>Genero</th>
+                        <th>Disponible</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(ML.Libro libro in Model.Libros)
+                    {
+                        <tr>
+                            <td><a class="btn btn-warning" href="@Url.Action("Form","Libro",new {idLibro = libro.IdLibro})"><i class="fa-solid fa-file-pen"></i></a></td>
+                            <td>@libro.Titulo</td>
+                            <td>@libro.Autor.Nombre @libro.Autor.ApellidoPaterno @libro.Autor.ApellidoMaterno</td>
+                            <td>@libro.Genero.Tipo</td>
+                            <td>
+                                @if(libro.Disponible)
+                                {
+                                    <i class="fa-solid fa-circle-check" style="color: #008000;"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa-solid fa-circle-xmark" style="color: #ff0000;"></i>
+                                }
+                            </td>
+                            <td><a class="btn btn-danger" href="@Url.Action("Delete","Libro",new {idLibro = libro.IdLibro})"><i class="fa-regular fa-rectangle-xmark"></i></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div role="alert" class="alert alert-warning">
+                Sin libros registrados.
+            </div>
+        }
+    }
+</div>
